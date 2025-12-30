@@ -1,4 +1,7 @@
 # Docker Compose override for Podman Windows compatibility
+
+version: "3.4"
+
 services:
   # Fix MongoDB permissions issues by removing user and using named volume
   mongodb:
@@ -6,6 +9,9 @@ services:
     volumes:
       - mongodb_data:/data/db
     command: mongod --noauth --bind_ip_all
+
+  rag_api:
+    image: ghcr.io/danny-avila/librechat-rag-api-dev:latest
 
   # Fix Meilisearch permissions
   meilisearch:
