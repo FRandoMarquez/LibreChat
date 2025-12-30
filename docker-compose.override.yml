@@ -1,0 +1,32 @@
+# Docker Compose override for Podman Windows compatibility
+services:
+  # Fix MongoDB permissions issues by removing user and using named volume
+  mongodb:
+    user: ""
+    volumes:
+      - mongodb_data:/data/db
+    command: mongod --noauth --bind_ip_all
+
+  # Fix Meilisearch permissions
+  meilisearch:
+    user: ""
+    volumes:
+      - meilisearch_data:/meili_data
+
+  # Remove user restrictions from main API and add librechat.yaml config
+  api:
+    user: ""
+    volumes:
+      - type: bind
+        source: ./.env
+        target: /app/.env
+      - type: bind
+        source: ./librechat.yaml
+        target: /app/librechat.yaml
+      - ./images:/app/client/public/images
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+
+volumes:
+  mongodb_data:
+  meilisearch_data:
