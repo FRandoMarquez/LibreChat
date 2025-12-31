@@ -59,7 +59,7 @@ spec:
                 name: {{ .Values.postgresql.auth.existingSecret }}
                 key: {{ .Values.postgresql.auth.secretKeys.userPasswordKey }}
           {{- end }}
-                    {{- if .Values.global.librechat.existingSecretName }}
+          {{- if .Values.global.librechat.existingSecretName }}
           - name: STACKIT_API_KEY
             valueFrom:
               secretKeyRef:
